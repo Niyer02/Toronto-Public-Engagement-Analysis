@@ -24,6 +24,6 @@ file_path <- "inputs/data/"
 download.file(url, paste(file_path, file_name, sep = ""), mode = "wb")
 
 # Read into data frame to test
-readfile <- read.csv("inputs/data/survey_data.csv", check.names = F)
+test_readfile <- read.csv("inputs/data/survey_data.csv", check.names = F)
 
          

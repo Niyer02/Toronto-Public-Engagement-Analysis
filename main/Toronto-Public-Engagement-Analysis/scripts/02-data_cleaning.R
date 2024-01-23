@@ -1,44 +1,41 @@
 #### Preamble ####
-# Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 6 April 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Cleans the recorded survey data
+# Author: Nikhil Iyer
+# Date: 23 January 2024
+# Contact: nik.iyer@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: None
 
 #### Workspace setup ####
 library(tidyverse)
+library(tibble)
 
 #### Clean data ####
-raw_data <- read_csv("inputs/data/plane_data.csv")
+raw_read_data <- read.csv("inputs/data/survey_data.csv", check.names = FALSE)
+cleaned_data <- raw_read_data
 
-cleaned_data <-
-  raw_data |>
-  janitor::clean_names() |>
-  select(wing_width_mm, wing_length_mm, flying_time_sec_first_timer) |>
-  filter(wing_width_mm != "caw") |>
-  mutate(
-    flying_time_sec_first_timer = if_else(flying_time_sec_first_timer == "1,35",
-                                   "1.35",
-                                   flying_time_sec_first_timer)
-  ) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "490",
-                                 "49",
-                                 wing_width_mm)) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "6",
-                                 "60",
-                                 wing_width_mm)) |>
-  mutate(
-    wing_width_mm = as.numeric(wing_width_mm),
-    wing_length_mm = as.numeric(wing_length_mm),
-    flying_time_sec_first_timer = as.numeric(flying_time_sec_first_timer)
-  ) |>
-  rename(flying_time = flying_time_sec_first_timer,
-         width = wing_width_mm,
-         length = wing_length_mm
-         ) |> 
-  tidyr::drop_na()
+# Replace all NA values with 0 and all empty cells with 'NA'
+cleaned_data[is.na(cleaned_data)] <- 0
+cleaned_data[cleaned_data == ""] <- NA
+
+# Only keep variables of interest
+features <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,
+              33,34,35,36,37,38,39,40,41,42,
+              84,85,86,87,88,89,90,91,92,93)
+
+parsed_data <-cleaned_data[, features]
+
+# Remove all rows where the predicted features are entirely NA
+final_data <- parsed_data[!(is.na(parsed_data[, 22]) & is.na(parsed_data[, 23]) 
+                     & is.na(parsed_data[, 24]) & is.na(parsed_data[, 25])
+                     & is.na(parsed_data[, 26]) & is.na(parsed_data[, 27])
+                     & is.na(parsed_data[, 28]) & is.na(parsed_data[, 29])
+                     & is.na(parsed_data[, 30]) & is.na(parsed_data[, 31])
+                     & is.na(parsed_data[, 32]) & is.na(parsed_data[, 33])
+                     & is.na(parsed_data[, 34]) & is.na(parsed_data[, 35])
+                     & is.na(parsed_data[, 36]) & is.na(parsed_data[, 37])
+                     & is.na(parsed_data[, 38]) & is.na(parsed_data[, 39])
+                     & is.na(parsed_data[, 40]) & is.na(parsed_data[, 41])), ]
 
 #### Save data ####
 write_csv(cleaned_data, "outputs/data/analysis_data.csv")
