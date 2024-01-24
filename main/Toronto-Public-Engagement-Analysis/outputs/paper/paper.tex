@@ -98,30 +98,6 @@
 \newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{#1}\break}
 \newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
 
-\usepackage{booktabs}
-\usepackage{longtable}
-\usepackage{array}
-\usepackage{multirow}
-\usepackage{wrapfig}
-\usepackage{float}
-\usepackage{colortbl}
-\usepackage{pdflscape}
-\usepackage{tabu}
-\usepackage{threeparttable}
-\usepackage{threeparttablex}
-\usepackage[normalem]{ulem}
-\usepackage{makecell}
-\usepackage{xcolor}
-\usepackage{siunitx}
-
-  \newcolumntype{d}{S[
-    input-open-uncertainty=,
-    input-close-uncertainty=,
-    parse-numbers = false,
-    table-align-text-pre=false,
-    table-align-text-post=false
-  ]}
-  
 \KOMAoption{captions}{tableheading}
 \makeatletter
 \makeatother
@@ -199,14 +175,14 @@
 \makeatother
 \subtitle{My subtitle if needed}
 \author{First author \and Another author}
-\date{January 23, 2024}
+\date{January 24, 2024}
 
 \begin{document}
 \maketitle
 \begin{abstract}
 First sentence. Second sentence. Third sentence. Fourth sentence.
 \end{abstract}
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, sharp corners, breakable, interior hidden, boxrule=0pt, borderline west={3pt}{0pt}{shadecolor}, enhanced]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[borderline west={3pt}{0pt}{shadecolor}, sharp corners, breakable, enhanced, interior hidden, boxrule=0pt, frame hidden]}{\end{tcolorbox}}\fi
 
 \hypertarget{introduction}{%
 \section{Introduction}\label{introduction}}
@@ -219,35 +195,15 @@ Section~\ref{sec-data}\ldots.
 \hypertarget{sec-data}{%
 \section{Data}\label{sec-data}}
 
-Some of our data is of penguins (Figure~\ref{fig-bills}), from Horst,
+Some of our data is of penguins (\textbf{?@fig-bills}), from Horst,
 Hill, and Gorman (2020).
-
-\begin{figure}
-
-{\centering \includegraphics{paper_files/figure-pdf/fig-bills-1.pdf}
-
-}
-
-\caption{\label{fig-bills}Bills of penguins}
-
-\end{figure}
 
 Talk more about it.
 
-And also planes (Figure~\ref{fig-planes}). (You can change the height
-and width, but don't worry about doing that until you have finished
-every other aspect of the paper - Quarto will try to make it look nice
-and the defaults usually work well once you have enough text.)
-
-\begin{figure}
-
-{\centering \includegraphics{paper_files/figure-pdf/fig-planes-1.pdf}
-
-}
-
-\caption{\label{fig-planes}Relationship between wing length and width}
-
-\end{figure}
+And also planes (\textbf{?@fig-planes}). (You can change the height and
+width, but don't worry about doing that until you have finished every
+other aspect of the paper - Quarto will try to make it look nice and the
+defaults usually work well once you have enough text.)
 
 Talk way more about it.
 
@@ -267,14 +223,8 @@ Define \(y_i\) as the number of seconds that the plane remained aloft.
 Then \(\beta_i\) is the wing width and \(\gamma_i\) is the wing length,
 both measured in millimeters.
 
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
+\begin{verbatim}
+\end{verbatim}
 
 We run the model in R (R Core Team 2022) using the \texttt{rstanarm}
 package of Goodrich et al. (2022). We use the default priors from
@@ -292,37 +242,7 @@ We can use maths by including latex between dollar signs, for instance
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-Our results are summarized in Table~\ref{tbl-modelresults}.
-
-\hypertarget{tbl-modelresults}{}
-\begin{table}
-\caption{\label{tbl-modelresults}Explanatory models of flight time based on wing width and wing length }\tabularnewline
-
-\centering
-\begin{tabular}[t]{lc}
-\toprule
-  & First model\\
-\midrule
-(Intercept) & \num{1.12}\\
- & (\num{1.70})\\
-length & \num{0.01}\\
- & (\num{0.01})\\
-width & \num{-0.01}\\
- & (\num{0.02})\\
-\midrule
-Num.Obs. & \num{19}\\
-R2 & \num{0.320}\\
-R2 Adj. & \num{0.019}\\
-Log.Lik. & \num{-18.128}\\
-ELPD & \num{-21.6}\\
-ELPD s.e. & \num{2.1}\\
-LOOIC & \num{43.2}\\
-LOOIC s.e. & \num{4.3}\\
-WAIC & \num{42.7}\\
-RMSE & \num{0.60}\\
-\bottomrule
-\end{tabular}
-\end{table}
+Our results are summarized in \textbf{?@tbl-modelresults}.
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
@@ -363,96 +283,20 @@ Weaknesses and next steps should also be included.
 \subsection{Posterior predictive
 check}\label{posterior-predictive-check}}
 
-In Figure~\ref{fig-ppcheckandposteriorvsprior-1} we implement a
-posterior predictive check. This shows\ldots{}
+In \textbf{?@fig-ppcheckandposteriorvsprior-1} we implement a posterior
+predictive check. This shows\ldots{}
 
-In Figure~\ref{fig-ppcheckandposteriorvsprior-2} we compare the
-posterior with the prior. This shows\ldots{}
-
-\begin{figure}
-
-\begin{minipage}[t]{0.50\linewidth}
-
-{\centering 
-
-\raisebox{-\height}{
-
-\includegraphics{paper_files/figure-pdf/fig-ppcheckandposteriorvsprior-1.pdf}
-
-}
-
-}
-
-\subcaption{\label{fig-ppcheckandposteriorvsprior-1}Posterior prediction
-check}
-\end{minipage}%
-%
-\begin{minipage}[t]{0.50\linewidth}
-
-{\centering 
-
-\raisebox{-\height}{
-
-\includegraphics{paper_files/figure-pdf/fig-ppcheckandposteriorvsprior-2.pdf}
-
-}
-
-}
-
-\subcaption{\label{fig-ppcheckandposteriorvsprior-2}Comparing the
-posterior with the prior}
-\end{minipage}%
-
-\caption{\label{fig-ppcheckandposteriorvsprior}Examining how the model
-fits, and is affected by, the data}
-
-\end{figure}
+In \textbf{?@fig-ppcheckandposteriorvsprior-2} we compare the posterior
+with the prior. This shows\ldots{}
 
 \hypertarget{diagnostics}{%
 \subsection{Diagnostics}\label{diagnostics}}
 
-Figure~\ref{fig-stanareyouokay-1} is a trace plot. It shows\ldots{} This
+\textbf{?@fig-stanareyouokay-1} is a trace plot. It shows\ldots{} This
 suggests\ldots{}
 
-Figure~\ref{fig-stanareyouokay-2} is a Rhat plot. It shows\ldots{} This
+\textbf{?@fig-stanareyouokay-2} is a Rhat plot. It shows\ldots{} This
 suggests\ldots{}
-
-\begin{figure}
-
-\begin{minipage}[t]{0.50\linewidth}
-
-{\centering 
-
-\raisebox{-\height}{
-
-\includegraphics{paper_files/figure-pdf/fig-stanareyouokay-1.pdf}
-
-}
-
-}
-
-\subcaption{\label{fig-stanareyouokay-1}Trace plot}
-\end{minipage}%
-%
-\begin{minipage}[t]{0.50\linewidth}
-
-{\centering 
-
-\raisebox{-\height}{
-
-\includegraphics{paper_files/figure-pdf/fig-stanareyouokay-2.pdf}
-
-}
-
-}
-
-\subcaption{\label{fig-stanareyouokay-2}Rhat plot}
-\end{minipage}%
-
-\caption{\label{fig-stanareyouokay}Checking the convergence of the MCMC
-algorithm}
-
-\end{figure}
 
 \newpage
 

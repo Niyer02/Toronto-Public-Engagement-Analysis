@@ -38,4 +38,4 @@ final_data <- parsed_data[!(is.na(parsed_data[, 22]) & is.na(parsed_data[, 23])
                      & is.na(parsed_data[, 40]) & is.na(parsed_data[, 41])), ]
 
 #### Save data ####
-write_csv(cleaned_data, "outputs/data/analysis_data.csv")
+write_csv(final_data, "outputs/data/analysis_data.csv")
