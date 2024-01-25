@@ -38,17 +38,19 @@ There has been an exponential growth in the number of people living in urban are
 
 Generally speaking, residents control the direction of their city. Developments, Costs, Facilities, and more are done based on the demographic of the city, and what the residents want. To obtain this data, cities have a variety of collection methods such as surveys, and annual census'. Due to the amount of data greatly increasing in recent years, statistical analysis has never been more important, and analyzing resident data offers insights to guide the city in choosing it's next steps.
 
-The remainder of this paper analyzes and discusses the results that were formed from [survey data](#survey-data) collected by the city of Toronto [@citeODT]. The following sections will show the statistical methodologies used in this analysis, which all adhere to the best data science practices. This analysis was performed in R[@citeR], using tidyverse[@citeTidy], tibble[@citeTibble], dplyr[@citeDplyr], ggplot2[@citeGG], viridis[@citeVir], knitr[@citeKnitr], and KableExtra[@citeKable]. The desired outcome is that the reader fully understands the methods used, and how the end result was derived.
+The remainder of this paper analyzes and discusses the results that were formed from [survey data](#survey-data) collected by the city of Toronto [@citeODT]. The following sections will show the statistical methodologies used in this analysis, which all adhere to the best data science practices. The sections can be broken down as follows: Section 1 - Introduction, Section 2 - Data, Section 3 - Results, Section 4 - Discussion, Section 5 - Appendix. 
+
+This analysis was performed in R[@citeR], using tidyverse[@citeTidy], tibble[@citeTibble], dplyr[@citeDplyr], ggplot2[@citeGG], viridis[@citeVir], knitr[@citeKnitr], and KableExtra[@citeKable]. The desired outcome is that the reader fully understands the methods used, and how the end result was derived.
 
 # Data {#survey-data}
 
-The raw data was collected from Open Data Toronto [@citeODT], and was cleaned in R [@citeR] using the tidyverse [@citeTidy] and dplyr [@citeDplyr] packages. The raw data consisted of 2 types or variables. The first being engagement questions, with binary response values `(NA, 1)`. The second being perception questions with responses ranging from (Strongly agree - Strongly disagree).
+The raw data was collected from Open Data Toronto [@citeODT], and was cleaned in R [@citeR] using the tidyverse [@citeTidy] and dplyr [@citeDplyr] packages. The raw data consisted of 2 types or variables. The first being engagement questions, with binary response values `(NA, 1)`. The second being perception questions with responses ranging from (Strongly agree - Strongly disagree). The cleaned data can be seen in @tbl-cleaned.
 
 Feature engineering is the process of converting raw data (Or in our case, cleaned data) into use able features. We performed feature engineering on the cleaned data set to end up with our desired features, which can be seen in @tbl-base:
 
 ```{r}
 #| label: tbl-base
-#| tbl-cap: "Base Cleaned Data"
+#| tbl-cap: "Analysis Data Example"
 #| echo: false
 
 data <- read.csv("/cloud/project/main/Toronto-Public-Engagement-Analysis/outputs/data/analysis_data.csv", check.names = F)
@@ -156,7 +158,7 @@ ggplot(quantitative_data, aes(x = engagement_prop, fill = ..x..)) +
 ```
 # Results {#results}
 
-The scatter plot of `engagement_prop` and `sentiment_average` can be seen in @fig-res. The expected behavior of the trend line is a positive growth as engagement increases, however as seen in @fig-res, the trend line stays flat, and even decreases near the end. This shows a very low correlation between `engagement_prop` and `sentiment_average`. In this context, a low correlation between the two variables means that as a participant engages more and gives more data to their city, their overall sentiment towards the city remains the same, or slightly decreases. The inference drawn from this analysis is that Toronto may not prioritize its residents' opinions as much as it should, which leads to the residents' sentiment towards Toronto slightly decreasing.
+The scatter plot of `engagement_prop` and `sentiment_average` can be seen in @fig-res. The expected behavior of the trend line is a positive growth as engagement increases, however as seen in @fig-res, the trend line stays flat, and even decreases near the end. This shows a very low correlation between `engagement_prop` and `sentiment_average`. The Pearsons Correlation value is -0.007 which confirms our findings, more can be seen in the [appendix](#cor). In this context, a low correlation between the two variables means that as a participant engages more and gives more data to their city, their overall sentiment towards the city remains the same, or slightly decreases. The inference drawn from this analysis is that Toronto may not prioritize its residents' opinions as much as it should, which leads to the residents' sentiment towards Toronto slightly decreasing.
 ```{r}
 #| label: fig-res
 #| fig-cap: "Scatterplot of `engagement_prop` and `sentiment_average`"
@@ -170,27 +172,23 @@ ggplot(quantitative_data, aes (x = engagement_prop, y=sentiment_average)) +
   theme_minimal() +
   labs(x="Engagement", y="Sentiment")
 ```
-
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
-
-```
+\newpage
 
 # Discussion
 
-## Discussion of the results {#sec-first-point}
+## Discussion of the results
 
 From the [results](#results) section, we conclude that Toronto may not prioritize its residents' opinions as much as it should, which leads to the residents' sentiment towards Toronto slightly decreasing. This conclusion is somewhat worrying when looking at how a city should perform and grow. As Toronto is a democracy, the growth should reflect the populations overall decision. However the findings in this paper show otherwise. The findings instead infer that Toronto does not use its residents' opinions as much as expected, as the trend line stayed quite flat. This does not mean that Toronto is making inherently bad decisions, as that would reflect in the trend greatly decreasing, but rather means Toronto is only doing an adequate job at applying its residents' opinions and/or advice.
 
-On average, residents that engage with Toronto more should have a positive sentiment, as their ideas and data should be reflected in some way, whether that be by changes made throughout the city, reactions from city officials, reactions from the general public, or another way. Evidence of this can be seen in neighborhoods, where residents empower each other, aid local governments, and therefore improve the outcomes. This theory should hold when applied to a larger group like a city, but falls short in Toronto.
+On average, residents that engage with Toronto more should have a positive sentiment, as their ideas and data should be reflected in some way, whether that be by changes made throughout the city, reactions from city officials, reactions from the general public, or another way. Evidence of this can be seen in neighborhoods, where residents empower each other, aid local governments, and therefore improve the outcomes [@citeGran]. This theory should hold when applied to a larger group like a city, but falls short in Toronto. Residents' should feel empowered, and community engagement should "serve as a catalyst for changing policies, programs, and practices"[@citeCom]. As residents' engage more with their community and city, they "are able to gain experience in organizing, identifying resources, and developing strategies to improve the community's well being an achieve their goals"[@citeEng].
+
+If Toronto does not change its ways, and continues to somewhat disregard its residents' there may be a major change in government officials as residents look to elect a leader that they feel represents and listens to them.
 
 ## Weaknesses and next steps
 
-Weaknesses and next steps should also be included.
+Weaknesses in this analysis can be seen in the data itself, and the correlation between the two variables. The data was collected from a survey, and records residents' perception of Toronto. While this data is important, and accurate, it is also subjective. This raises concerns of how accurate the data can be when looking at the overall sentiment. While it is true that community engagement should boost overall sentiment, the data collected did not have enough coverage and variety of questions to make a hard conclusion, which is why the [results](#results) show a flat and static trend line around the neutral category. Additionally, many respondents chose not to answer some questions, and while most `NA` rows were cleaned, not all of them could be. The presence of missing data points may have led to some noise in the statistics and graphs.
+
+Next steps would be to collect more complete and comprehensive data regarding this subject. This would allow for a more in-depth analysis and more powerful statistical tests. This would also allow for better inferences, which cities could use to make more-informed decisions.
 
 \newpage
 
@@ -198,7 +196,42 @@ Weaknesses and next steps should also be included.
 
 # Appendix {.unnumbered}
 
-# Additional data details
+# Cleaned Data
+```{r}
+#| label: tbl-cleaned
+#| tbl-cap: "Base Cleaned Data"
+#| echo: false
+
+display_column_names <- c("Respondent", "Engagement1", "Engagement2", "Sentiment1", "Sentiment2")
+kable(
+  head(data[, c(1, 2, 3, 26, 27)]),
+  col.names = display_column_names
+)
+```
+
+# Data After Applying Quantitative Mapping
+```{r}
+#| label: tbl-quant
+#| tbl-cap: "Base Quantitative Data"
+#| echo: false
+
+display_column_names <- c("Respondent", "Engagement1", "Engagement2", "Sentiment1", "Sentiment2")
+kable(
+  head(quantitative_data[, c(1, 2, 3, 26, 27)]),
+  col.names = display_column_names
+)
+```
+
+# Pearsons Correlation Test on Variables of Interest {#cor}
+```{r}
+#| label: fig-cor
+#| fig-cap: "Pearson Correlation Test of `engagement_prop` and `sentiment_average`"
+#| echo: false
+#| 
+cor <- cor.test(quantitative_data$engagement_prop, quantitative_data$sentiment_average, method = "pearson")
+
+cor
+```
 
 \newpage
 
