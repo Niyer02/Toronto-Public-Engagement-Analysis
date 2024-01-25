@@ -19,7 +19,7 @@ library(kableExtra)
 #### Test data ####
 
 # Read in the cleaned data
-data <- read.csv("outputs/data/analysis_data.csv", check.names = F)
+data <- read.csv("/cloud/project/main/Toronto-Public-Engagement-Analysis/outputs/data/analysis_data.csv", check.names = F)
 
 # Sum the rows of the int columns which are engagement
 data$engagement_sum <- rowSums(data[, 2:21])
@@ -47,63 +47,17 @@ quantitative_data <- data %>% mutate_at(vars(22:41), ~qualitative_mapping(.))
 # calculate the mean of the sentiment
 quantitative_data <- quantitative_data %>% mutate(sentiment_average = rowMeans(select(., 22:41), na.rm = TRUE))
 
+#### Data Tests ####
+numeric <- sapply(data[c("engagement_sum", "engagement_prop")], is.numeric)
+
+# Print the result
+if (all(numeric)) {
+  print("PASS.")
+} else {
+  print("FAIL.")
+}
 
 
-# Create scatter plot
-ggplot(quantitative_data, aes (x = engagement_prop, y=sentiment_average)) + 
-  geom_point(aes(color = engagement_prop)) +
-  geom_smooth(method="loess", se=TRUE, color='black') +
-  scale_color_viridis(option = "D")+
-  theme_minimal() +
-  labs(title="Test plot", x="Engagement", y="Sentiment")
-
-
-# Histograms
-ggplot(quantitative_data, aes(x = sentiment_average, fill = ..x..)) +
-  geom_histogram(color = "black", bins = 20) +
-  scale_fill_viridis(option = "D", name = "Sentiment") +
-  labs(title = "Histogram of Sentiment", x = "Average Value", y = "Frequency")
-
-
-# Histograms
-ggplot(quantitative_data, aes(x = engagement_prop, fill = ..x..)) +
-  geom_histogram(color = "black", bins = 20) +
-  scale_fill_viridis(option = "D", name = "Engagement") +
-  labs(title = "Histogram of Engagement", x = "Average Value", y = "Frequency")
-
-
-
-# Summary statistics for sentiment_average
-summary_sentiment <- describe(quantitative_data$sentiment_average)
-
-# Summary statistics for engagement_prop
-summary_engagement <- describe(quantitative_data$engagement_prop)
-
-sentiment_summary <- data.frame(
-  Variable = "sentiment_average",
-  n = summary_sentiment$n,
-  Mean = summary_sentiment$mean,
-  SD = summary_sentiment$sd,
-  Median = summary_sentiment$median,
-  Min = summary_sentiment$min,
-  Max = summary_sentiment$max,
-  Skew = summary_sentiment$skew,
-  Kurtosis = summary_sentiment$kurtosis
-)
-
-engagement_summary <- data.frame(
-  Variable = "sentiment_average",
-  n = summary_engagement$n,
-  Mean = summary_engagement$mean,
-  SD = summary_engagement$sd,
-  Median = summary_engagement$median,
-  Min = summary_engagement$min,
-  Max = summary_engagement$max,
-  Skew = summary_engagement$skew,
-  Kurtosis = summary_engagement$kurtosis
-)
-
-print(sentiment_summary)
 
 
 

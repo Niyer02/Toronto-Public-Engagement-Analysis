@@ -4,7 +4,7 @@
 # Date: 23 January 2024
 # Contact: nik.iyer@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: Internet access
+# Pre-requisites: Internet access, Dependencies installed
 
 
 #### Workspace setup ####
@@ -26,4 +26,4 @@ download.file(url, paste(file_path, file_name, sep = ""), mode = "wb")
 # Read into data frame to test
 test_readfile <- read.csv("inputs/data/survey_data.csv", check.names = F)
 
-         
+print(head(test_readfile))

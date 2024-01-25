@@ -40,8 +40,6 @@ colnames(simulated_data) <- c("person_pk",example_questions)
 # Print the first couple of rows of simulated data
 print(head(simulated_data))
 
-#### Simulated Data Tests ####
-
 # Note that all the example questions are created in a way s.t. '1' is positive, 
 # and '0' is negative. This will be used to perform the sentiment analysis.
 # The real data should be setup in a similar way.
@@ -60,4 +58,15 @@ cat("Q1:", q1_results, " Q2:", q2_results, " Q3:", q3_results, " Q4:", q4_result
 # From this we could conclude that the overall sentiment is neutral, or
 # Slightly positive, which is expected as the random function will be roughly
 # normally distributed.
+
+#### Simulated Data Tests ####
+numeric <- all(sapply(simulated_data, is.numeric))
+
+# Print the result
+if (numeric) {
+  print("PASS")
+} else {
+  print("FAIL")
+}
+
   

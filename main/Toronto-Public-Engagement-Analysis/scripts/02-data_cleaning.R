@@ -4,7 +4,7 @@
 # Date: 23 January 2024
 # Contact: nik.iyer@mail.utoronto.ca
 # License: MIT
-# Pre-requisites: None
+# Pre-requisites: Dependencies installed
 
 #### Workspace setup ####
 library(tidyverse)
@@ -25,7 +25,7 @@ features <- c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,
 
 parsed_data <-cleaned_data[, features]
 
-# Remove all rows where the predicted features are entirely NA
+# Remove all rows where the desired features are entirely NA
 final_data <- parsed_data[!(is.na(parsed_data[, 22]) & is.na(parsed_data[, 23]) 
                      & is.na(parsed_data[, 24]) & is.na(parsed_data[, 25])
                      & is.na(parsed_data[, 26]) & is.na(parsed_data[, 27])
