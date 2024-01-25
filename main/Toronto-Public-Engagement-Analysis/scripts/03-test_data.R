@@ -13,7 +13,7 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 library(psych)
-library("viridis")
+library(viridis)
 library(knitr)
 library(kableExtra)
 #### Test data ####
@@ -56,7 +56,6 @@ ggplot(quantitative_data, aes (x = engagement_prop, y=sentiment_average)) +
   scale_color_viridis(option = "D")+
   theme_minimal() +
   labs(title="Test plot", x="Engagement", y="Sentiment")
-
 
 
 # Histograms
@@ -105,7 +104,6 @@ engagement_summary <- data.frame(
 )
 
 print(sentiment_summary)
-
 
 
 
